@@ -1,0 +1,29 @@
+[build-system]
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "NEASP-DTI"
+version = "0.1.0"
+description = "NEASP-DTI workspace"
+requires-python = ">=3.12,<3.13"
+dependencies = ["numpy>=2,<3", "scikit-learn>=1.7,<2"]
+
+[project.optional-dependencies]
+cuda = ["torch==2.11.0"]
+
+[project.scripts]
+neasp = "neasp_dti.run:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/neasp_dti"]
+
+[tool.uv.sources]
+torch = [
+  { index = "pytorch-cu128", extra = "cuda" },
+]
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
